@@ -34,6 +34,7 @@ DEFAULT_APPS = [
 THIRD_PARTY_APPS = [
     # https://www.django-rest-framework.org/
     'rest_framework',
+    # https://pypi.org/project/django-cors-headers/
     'corsheaders',
 ]
 
@@ -44,6 +45,11 @@ LOCAL_APPS = [
 # Application definition
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'whatimage.urls'

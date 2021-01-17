@@ -1,4 +1,3 @@
-// https://www.npmjs.com/package/axios
 import './App.css';
 import Classifier from './components/Classifier/Classifier';
 
