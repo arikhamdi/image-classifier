@@ -1,0 +1,21 @@
+.vscode/
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+whatimage_back/media
+
+
+### react ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+
+whatimage_front/node_modules
+whatimage_front/bower_components
