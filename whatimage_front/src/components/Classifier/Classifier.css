@@ -1,5 +1,5 @@
 .back {
-    margin: 20px;
+    margin: 20px 0;
     background: #f8f8f8;
     border: 3px dashed #f0f0f0;
     border-radius: 5px;
@@ -13,3 +13,21 @@
 .back:hover {
     border: 3px dashed skyblue;
 }
+
+.container-image {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image {
+    width: 25%;
+    padding: 1%;
+}
+.image {
+    background: center center/cover;
+    height: 300px;
+}
+

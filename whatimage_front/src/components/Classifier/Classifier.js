@@ -1,32 +1,23 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import './Classifier.css'
-import { Button, Spinner } from 'react-bootstrap'
+import { Alert, Button, Image, Spinner } from 'react-bootstrap'
 // https://www.npmjs.com/package/axios
 import axios from 'axios'
+import ImageList from '../ImageList/ImageList';
 
 class Classifier extends Component {
     state = {
         files: [],
-        isLoading: false
+        isLoading: false,
+        recentImage: null,
     }
-    // componentDidMount() {
-    //     this.getImages()
-    // }
-
-    // getImages = () => {
-    //     axios.get('http://127.0.0.1:8000/api/images/', {
-    //         headers: {
-    //             'accept': 'application/json'
-    //         }
-    //     }).then(resp => {
-    //         console.log(resp)
-    //     })
-    // }
 
     onDrop = (files) => {
         this.setState({
+            files: [],
             isLoading: true,
+            recentImage: null,
         })
         this.loadImage(files)
     }
@@ -42,7 +33,19 @@ class Classifier extends Component {
         }, 1000)
     }
 
+    activateSpinner = () => {
+        this.setState({
+            files: [],
+            isLoading: true
+        })
+    }
+
+    deactivateSpinner = () => {
+        this.setState({ isLoading: false })
+    }
+
     sendImage = () => {
+        this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0], this.state.files[0].name)
         axios.post('http://127.0.0.1:8000/api/images/', formData, {
@@ -52,11 +55,30 @@ class Classifier extends Component {
             }
         })
             .then(resp => {
+                this.getImageClass(resp)
+                console.log(resp.data.id)
+            })
+            .catch(err => {
+                console.log('Error message :' + err)
+            })
+    }
+
+    getImageClass = (obj) => {
+        axios.get(`http://127.0.0.1:8000/api/images/${obj.data.id}/`, {
+            headers: {
+                'accept': 'application/json',
+            }
+        })
+            .then(resp => {
+                this.setState({ recentImage: resp })
                 console.log(resp)
             })
             .catch(err => {
                 console.log('Error message :' + err)
             })
+        this.deactivateSpinner()
+
+
     }
 
 
@@ -75,7 +97,7 @@ class Classifier extends Component {
                             <input {...getInputProps()} />
                             <p><i className="far fa-image mb-2 text-muted" style={{ fontSize: 75 }}></i></p>
                             <p>{isDragActive ? 'Drop some images' : 'Drag \'n\' drop some files here, or click to select files'}</p>
-                            <small>Accept only .jpg and .png</small>
+                            <small>Accept only .jpeg and .png</small>
                         </div>
                         <aside>
                             <ul>{files}</ul>
@@ -86,9 +108,15 @@ class Classifier extends Component {
                         }
 
                         {this.state.isLoading &&
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
+                            <Spinner animation="border" role="status"></Spinner>
+                        }
+                        {this.state.recentImage &&
+                            <React.Fragment>
+                                <Alert variant='primary'>
+                                    {this.state.recentImage.data.classified}
+                                </Alert>
+                                <Image src={this.state.recentImage.data.picture} width='100%' rounded />
+                            </React.Fragment>
                         }
                     </section>
                 )}
