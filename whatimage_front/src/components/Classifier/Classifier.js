@@ -115,7 +115,7 @@ class Classifier extends Component {
                                 <Alert variant='primary'>
                                     {this.state.recentImage.data.classified}
                                 </Alert>
-                                <Image src={this.state.recentImage.data.picture} width='100%' rounded />
+                                <Image className="mb-5" src={this.state.recentImage.data.picture} width='100%' rounded />
                             </React.Fragment>
                         }
                     </section>

@@ -65,9 +65,9 @@ class ImageList extends Component {
                                     :
                                     <>
                                         {this.state.images.length > this.state.visible ?
-                                            < Button variant='primary' size='lg' onClick={this.handleVisible}>Load more</Button>
+                                            < Button className="mb-5" variant='primary' size='lg' onClick={this.handleVisible}>Load more</Button>
                                             :
-                                            <p>No more images to load</p>
+                                            <p className="mb-5">No more images to load</p>
                                         }
                                     </>
                                 }
@@ -77,7 +77,6 @@ class ImageList extends Component {
                 }
 
 
-                <br /><br /><br /><br />
             </section>
         );
     }
